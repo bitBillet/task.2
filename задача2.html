@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Задача№2</title>
+    <style>
+        body {
+      display: flex;
+      align-items: center;
+    }
+      form {
+        display: inline-block;
+        border: 1px solid grey;
+        padding: 10px;
+        margin: auto;
+        padding-bottom: 0;
+        position: relative;
+        z-index: 1;
+      }
+      h3 {
+        font-size: 16px;
+        padding: 0;
+        margin: 0;
+      }
+      input {
+        width: 250px;
+      }
+    </style>
+</head>
+
+<body>
+    <form action="" id="forma">
+        <h3>Исходное положение:</h3>
+        <input type="text" id='position' value="">
+        <p>
+            <button type="botton" onclick="stepHorse()">Ok</button>
+    </form>
+    <script>
+// позиции доски
+let chess = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+function stepHorse() {
+    let arr = [], // массив для сбора возможных ходов
+        truArr = [], // тоже массив для сбора возможных ходов, отредактированный
+        stepPosition = document.getElementById('position').value,
+        indexLetter = stepPosition.slice(0, 1).toUpperCase(),
+        indexNumber = stepPosition.slice(1);
+    // Вводить числа больше 8 и меньше 1 нельзя
+    if (indexNumber > 8 || indexNumber < 1) return alert('Nay');
+    // добавление в массив возможных ходов коня
+    for (let i = 0; i < chess.length; i++) {
+        if (chess[i] == indexLetter) arr.push(chess[i - 1] + (+indexNumber - 2),
+            chess[i + 1] + (+indexNumber - 2), chess[i + 2] + (+indexNumber - 1),
+            chess[i + 2] + (+indexNumber + 1), chess[i + 1] + (+indexNumber + 2),
+            chess[i - 1] + (+indexNumber + 2), chess[i - 2] + (+indexNumber - 1),
+            chess[i - 2] + (+indexNumber + 1));
+    }
+    // проверка массива на false, NaN и удаление
+    for (let j = 0; j < arr.length; j++) {
+        if (!arr[j]) {
+            arr.splice(j, 1);
+            j--;
+        }
+    }
+    // проверка массива arr на соответствие с доской по номерам и добавление в массив truArr подходящих по номеру элементов
+    for (let j = 0; j < arr.length; j++) {
+        let indexNum = arr[j].slice(1);
+        if (indexNum > 0 && indexNum < 9) truArr.push(arr[j]);
+    }
+
+    truArr = truArr.join(' ');
+    alert('Возможные варианты хода: \n\n' + truArr);
+}
+</script>
+</body>
+
+</html>
